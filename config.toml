@@ -1,0 +1,32 @@
+baseURL = "https://dudongwei.gitee.io"
+languageCode = "zh-CN"
+title = "杜东为的博客"
+theme = "maupassant"
+hasCJKLanguage = true
+summaryLength = 140
+paginate = 10
+
+[author]
+    name = "杜东为"
+
+[params]
+    author = "杜东为"
+    subtitle = "专注于后端开发、系统架构"
+    keywords = "golang,php,数据库,消息队列,系统架构"
+    description = "专注于后端技术，包括但不限于PHP、GO、数据库、微服务、系统架构等"
+    busuanzi = true # 启用不算子网页统计
+    localSearch = true # 启用本地搜索
+
+    # 全局开关，你也可以在每一篇内容的 front matter 中针对单篇内容关闭或开启某些功能
+    toc = false  # 是否开启目录
+
+[permalinks]
+  posts = "/:year/:month/:title/"
+
+[menu]
+    [[menu.main]]
+    identifier = "archives"
+    name = "归档"
+    url = "/archives/"
+    weight = 1
+
