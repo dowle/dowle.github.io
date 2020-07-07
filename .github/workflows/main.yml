@@ -29,3 +29,4 @@ jobs:
       with:
         repo: current
         target_branch: gh-pages
+        build_dir: public
