@@ -1,0 +1,31 @@
+# 工作流名
+name: github pages deploy
+# 触发条件
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# 任务
+jobs:
+  # 一个部署pages的任务
+  deloy-pages:
+    # 运行runner
+    runs-on: ubuntu-latest
+
+    # 执行步骤
+    steps:
+    # checkout仓库，才能进行后续操作
+    - uses: actions/checkout@v2
+
+    # hugo生成静态文件
+    - name: hugo-setup
+      uses: peaceiris/actions-hugo@v2.4.12
+
+    # 部署pages
+    - name: deploy-pages
+      uses: crazy-max/ghaction-github-pages@v2.1.0
+      with:
+        repo: current
+        target_branch: gh-pages
