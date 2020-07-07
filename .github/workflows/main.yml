@@ -17,7 +17,8 @@ jobs:
     # 执行步骤
     steps:
     # checkout仓库，才能进行后续操作
-    - uses: actions/checkout@v2
+    - name: checkout 
+      uses: actions/checkout@v2
 
     # hugo生成静态文件
     - name: hugo-setup
@@ -29,4 +30,4 @@ jobs:
       with:
         repo: current
         target_branch: gh-pages
-        build_dir: public
+        build_dir: .
