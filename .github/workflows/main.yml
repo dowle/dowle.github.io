@@ -19,6 +19,8 @@ jobs:
     # checkout仓库，才能进行后续操作
     - name: checkout 
       uses: actions/checkout@v2
+      with:
+        submodules: recursive
 
     # hugo生成静态文件
     - name: hugo-setup
