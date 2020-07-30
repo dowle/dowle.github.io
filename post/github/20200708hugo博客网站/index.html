@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>使用hugo&#43;github搭建博客网站 | 杜东为的博客</title>
+    <meta property="og:title" content="使用hugo&#43;github搭建博客网站 - 杜东为的博客">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2020-07-08T18:26:13&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2020-07-08T18:26:13&#43;08:00'>
+        
+    <meta name="Keywords" content="golang,php,数据库,消息队列,系统架构">
+    <meta name="description" content="使用hugo&#43;github搭建博客网站">
+        
+    <meta name="author" content="杜东为">
+    <meta property="og:url" content="/post/github/20200708hugo%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+
+
+    
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="/">
+                        杜东为的博客
+                    </a>
+                
+                <p class="description">专注于后端开发、系统架构</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="/">首页</a>
+                    
+                    <a  href="/categories/" title="分类">分类</a>
+                    
+                    <a  href="/archives/" title="归档">归档</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">使用hugo&#43;github搭建博客网站</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年7月8日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/%E5%85%B6%E4%BB%96'>其他</a></span>
+            
+        </div>
+        
+        
+        
+        <div class="post-content">
+            <h2 id="使用hugo">使用hugo</h2>
+<p><a href="https://gohugo.io/documentation/">doc</a></p>
+<h4 id="安装">安装</h4>
+<ol>
+<li>这里采用github包的方式，<a href="https://github.com/gohugoio/hugo/releases">下载地址</a></li>
+<li>将hugo加入环境变量中</li>
+<li>验证是否成功
+<pre><code>hugo version
+</code></pre></li>
+</ol>
+<h4 id="初始化项目">初始化项目</h4>
+<pre><code>hugo new site 项目名
+cd 项目
+git init
+</code></pre><h4 id="使用主题">使用主题</h4>
+<ol>
+<li>添加主题子模块
+<pre><code>git submodule add https://github.com/flysnow-org/maupassant-hugo themes/maupassant
+</code></pre></li>
+<li>使用主题<br>
+在config.toml中配置 theme = maupassant</li>
+</ol>
+<h4 id="创建文件">创建文件</h4>
+<pre><code>hugo new post/文章.md
+</code></pre><p>则会创建 content/post/文章.md 文件</p>
+<h4 id="本地服务">本地服务</h4>
+<pre><code>hugo server
+</code></pre><h4 id="打包静态资源">打包静态资源</h4>
+<pre><code>hugo
+</code></pre><h2 id="使用github部署项目">使用github部署项目</h2>
+<h4 id="创建github项目">创建github项目</h4>
+<ol>
+<li>可以是blog，则后面访问url为: http://用户名.github.io/blog</li>
+<li>可以是用户名.github.io, 则后面访问的url为: http://用户名.github.io</li>
+</ol>
+<h4 id="pages服务">pages服务</h4>
+<ol>
+<li>创建gh-pages分支，用于存放静态资源</li>
+<li>在github上开启设置pages服务, settings-&gt;options-&gt;github pages-&gt;选择分支</li>
+</ol>
+<h4 id="actions配置ci">actions配置ci</h4>
+<p>github的ci/cd工具，提交代码后触发动作，用来完成部署工作。</p>
+<p>main.yaml</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#75715e"># 工作流名</span>
+<span style="color:#66d9ef">name</span>: github pages deploy
+<span style="color:#75715e"># 触发条件</span>
+<span style="color:#66d9ef">on</span>:
+  <span style="color:#66d9ef">push</span>:
+    <span style="color:#66d9ef">branches</span>: [ master ]
+  <span style="color:#66d9ef">pull_request</span>:
+    <span style="color:#66d9ef">branches</span>: [ master ]
+
+<span style="color:#75715e"># 任务</span>
+<span style="color:#66d9ef">jobs</span>:
+  <span style="color:#75715e"># 一个部署pages的任务</span>
+  <span style="color:#66d9ef">deloy-pages</span>:
+    <span style="color:#75715e"># 运行runner</span>
+    <span style="color:#66d9ef">runs-on</span>: ubuntu-latest
+
+    <span style="color:#75715e"># 执行步骤</span>
+    <span style="color:#66d9ef">steps</span>:
+    <span style="color:#75715e"># checkout仓库，才能进行后续操作</span>
+    - <span style="color:#66d9ef">name</span>: checkout 
+      <span style="color:#66d9ef">uses</span>: actions/checkout@v2
+
+    <span style="color:#75715e"># hugo生成静态文件</span>
+    - <span style="color:#66d9ef">name</span>: hugo-setup
+      <span style="color:#66d9ef">uses</span>: peaceiris/actions-hugo@v2<span style="color:#ae81ff">.4.12</span>
+    - <span style="color:#66d9ef">name</span>: hugo-build
+      <span style="color:#66d9ef">run</span>: hugo
+
+    <span style="color:#75715e"># 部署pages</span>
+    - <span style="color:#66d9ef">name</span>: deploy-pages
+      <span style="color:#66d9ef">uses</span>: peaceiris/actions-gh-pages@v3<span style="color:#ae81ff">.6.1</span>
+      <span style="color:#66d9ef">with</span>:
+        <span style="color:#66d9ef">publish_branch</span>: gh-pages
+        <span style="color:#66d9ef">publish_dir</span>: public
+        <span style="color:#66d9ef">github_token</span>: ${{ secrets.GITHUB_TOKEN }}
+
+</code></pre></div><p>如文件描述：</p>
+<ol>
+<li>定义一个工作流名</li>
+<li>定义触发工作流的条件</li>
+<li>定义工作流的任务s</li>
+<li>定义一个部署任务</li>
+</ol>
+<ul>
+<li>定义执行环境</li>
+<li>定义需要执行的步骤s
+<ol>
+<li>checkout仓库代码，并更新submodule</li>
+<li>加入hugo环境</li>
+<li>执行hugo命令，编译静态资源文件</li>
+<li>部署pages（将代码提交到指定分支）</li>
+</ol>
+</li>
+</ul>
+<p>然后测试在master上提交，检查是否能自动部署</p>
+
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/linux/20200615io%E6%A8%A1%E5%9E%8B%E8%AF%A6%E8%A7%A3/">io模型详解（转载）</a></li>
+        
+        <li><a href="/post/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/%E5%9F%BA%E7%A1%80/">基础</a></li>
+        
+        <li><a href="/archives/">归档</a></li>
+        
+        <li><a href="/search/">搜索</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/tags/github'>github</a></li>
+                
+                <li><a href='/tags/hugo'>hugo</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+</div>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="/">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="/post/%E7%BD%91%E7%BB%9C/20200730http/" title="http协议">http协议</a>
+    </li>
+    
+    <li>
+        <a href="/post/github/20200708hugo%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/" title="使用hugo&#43;github搭建博客网站">使用hugo&#43;github搭建博客网站</a>
+    </li>
+    
+    <li>
+        <a href="/post/linux/20200615io%E6%A8%A1%E5%9E%8B%E8%AF%A6%E8%A7%A3/" title="io模型详解（转载）">io模型详解（转载）</a>
+    </li>
+    
+    <li>
+        <a href="/post/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/%E5%9F%BA%E7%A1%80/" title="基础">基础</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li><a href="/categories/linux/">Linux (1)</a></li>
+    
+    <li><a href="/categories/%E5%85%B6%E4%BB%96/">其他 (1)</a></li>
+    
+    <li><a href="/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/">消息中间件 (1)</a></li>
+    
+    <li><a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="/tags/github/">github</a>
+    
+    <a href="/tags/http/">http</a>
+    
+    <a href="/tags/hugo/">hugo</a>
+    
+    <a href="/tags/io/">io</a>
+    
+    <a href="/tags/linux/">Linux</a>
+    
+    <a href="/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/">消息中间件</a>
+    
+    <a href="/tags/%E7%BD%91%E7%BB%9C/">网络</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+    <footer id="footer">
+    <div class="container">
+        &copy; 2020 <a href="/">杜东为的博客 By 杜东为</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/flysnow-org/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+
+
+
+</body>
+
+</html>

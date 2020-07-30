@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>http on 杜东为的博客</title>
+    <link>/tags/http/</link>
+    <description>Recent content in http on 杜东为的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 30 Jul 2020 14:31:21 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/http/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>http协议</title>
+      <link>/post/%E7%BD%91%E7%BB%9C/20200730http/</link>
+      <pubDate>Thu, 30 Jul 2020 14:31:21 +0800</pubDate>
+      
+      <guid>/post/%E7%BD%91%E7%BB%9C/20200730http/</guid>
+      <description>HTTP协议是什么 HTTP 是一个在计算机世界里专门在「两点」之间「传输」文字、图片、音频、视频等「超文本」数据的「约定和规范」。 常见http状态码 100 Continue。</description>
+    </item>
+    
+  </channel>
+</rss>
