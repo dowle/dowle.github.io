@@ -17,7 +17,7 @@
       <pubDate>Sun, 02 Aug 2020 08:29:05 +0800</pubDate>
       
       <guid>/post/%E5%BE%AE%E6%9C%8D%E5%8A%A1/20200802%E4%B8%80%E8%87%B4%E6%80%A7%E8%AE%BE%E8%AE%A1/</guid>
-      <description>基础理论 分布式事务 要理解分布式事务，先从单机事务开始。 以银行状态为例子：假设A（10元）要向B（5元）转账5元，步骤如下。 step1: 查询A账户是否大于5元，状态(A10</description>
+      <description>基础理论 分布式事务 要理解分布式事务，先从单机事务开始。 以银行状态为例子：假设A（10元）要向B（5元）转账5元，步骤如下。 step1: 查询A账户是否大</description>
     </item>
     
   </channel>

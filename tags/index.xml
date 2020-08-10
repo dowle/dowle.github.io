@@ -6,10 +6,28 @@
     <description>Recent content in Tags on 杜东为的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 02 Aug 2020 08:29:05 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 10 Aug 2020 14:45:57 +0800</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Mysql</title>
+      <link>/tags/mysql/</link>
+      <pubDate>Mon, 10 Aug 2020 14:45:57 +0800</pubDate>
+      
+      <guid>/tags/mysql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>数据库中间件</title>
+      <link>/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E9%97%B4%E4%BB%B6/</link>
+      <pubDate>Mon, 10 Aug 2020 14:45:57 +0800</pubDate>
+      
+      <guid>/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E9%97%B4%E4%BB%B6/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>一致性</title>

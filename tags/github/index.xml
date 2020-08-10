@@ -17,7 +17,7 @@
       <pubDate>Wed, 08 Jul 2020 18:26:13 +0800</pubDate>
       
       <guid>/post/github/20200708hugo%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/</guid>
-      <description>使用hugo doc 安装 这里采用github包的方式，下载地址 将hugo加入环境变量中 验证是否成功 hugo version 初始化项目 hugo new site 项目名 cd 项目 git init 使用主题 添加主题子模块 git submodule add https://github.com/flysnow-org/maupassant-hugo themes/maupassant</description>
+      <description>使用hugo doc 安装 这里采用github包的方式，下载地址 将hugo加入环境变量中 验证是否成功 1 hugo version 初始化项目 1 2 3 hugo new site 项目名 cd 项目 git init 使用</description>
     </item>
     
   </channel>

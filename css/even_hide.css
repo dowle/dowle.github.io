@@ -1,0 +1,7 @@
+/* 隐藏 */
+#footer .social-links,.power-by,.division,.theme-info {
+    display: none;
+}
+#footer {
+    margin-top: -3rem;
+}

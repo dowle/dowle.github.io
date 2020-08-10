@@ -17,7 +17,7 @@
       <pubDate>Mon, 15 Jun 2020 18:33:19 +0800</pubDate>
       
       <guid>/post/linux/20200615io%E6%A8%A1%E5%9E%8B%E8%AF%A6%E8%A7%A3/</guid>
-      <description>I/O介绍 I/O通常有内存IO、网络I/O、磁盘I/O等，但我们通常说的是网络I/O以及磁盘I/O。网络I/O：本质是socket读取。 每次I/O请求，都会有两</description>
+      <description>I/O介绍 I/O通常有内存IO、网络I/O、磁盘I/O等，但我们通常说的是网络I/O以及磁盘I/O。网络I/O：本质是socket读取。 每次</description>
     </item>
     
   </channel>
