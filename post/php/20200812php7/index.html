@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>PHP7新特性 - 杜东为的博客</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="dowle" /><meta name="description" content="PHP7与PHP5的性能比较 注：因为对PHP内核不了解，信息来源于网上。 PHP7比PHP5快3倍以上。 本质上来说就是对zend 引擎的优化，减" /><meta name="keywords" content="golang, 数据库, 系统架构" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.74.3 with theme even" />
+
+
+<link rel="canonical" href="/post/php/20200812php7/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+<link rel="stylesheet" href="/css/even_hide.css">
+
+
+<meta property="og:title" content="PHP7新特性" />
+<meta property="og:description" content="PHP7与PHP5的性能比较 注：因为对PHP内核不了解，信息来源于网上。 PHP7比PHP5快3倍以上。 本质上来说就是对zend 引擎的优化，减" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/php/20200812php7/" />
+<meta property="article:published_time" content="2020-08-12T10:55:02+08:00" />
+<meta property="article:modified_time" content="2020-08-12T10:55:02+08:00" />
+<meta itemprop="name" content="PHP7新特性">
+<meta itemprop="description" content="PHP7与PHP5的性能比较 注：因为对PHP内核不了解，信息来源于网上。 PHP7比PHP5快3倍以上。 本质上来说就是对zend 引擎的优化，减">
+<meta itemprop="datePublished" content="2020-08-12T10:55:02+08:00" />
+<meta itemprop="dateModified" content="2020-08-12T10:55:02+08:00" />
+<meta itemprop="wordCount" content="595">
+
+
+
+<meta itemprop="keywords" content="PHP," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="PHP7新特性"/>
+<meta name="twitter:description" content="PHP7与PHP5的性能比较 注：因为对PHP内核不了解，信息来源于网上。 PHP7比PHP5快3倍以上。 本质上来说就是对zend 引擎的优化，减"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Dowle</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">首页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归档</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Dowle</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">首页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归档</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">PHP7新特性</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-08-12 </span>
+        <div class="post-category">
+            <a href="/categories/php/"> PHP </a>
+            </div>
+        
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title"></h2>
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#php7与php5的性能比较">PHP7与PHP5的性能比较</a></li>
+        <li><a href="#php7的新特征">PHP7的新特征</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h2 id="php7与php5的性能比较">PHP7与PHP5的性能比较</h2>
+<p><em>注：因为对PHP内核不了解，信息来源于网上。</em><br>
+PHP7比PHP5快3倍以上。
+本质上来说就是对zend 引擎的优化，减少内存分配次数，多使用栈内存，缓存数组hash值，字符串解析成参数改为宏展开，使用大块连续内存代替小块碎片内存等。</p>
+<p>具体原因是：</p>
+<ol>
+<li>存储变量的结构体变小，尽量使结构体里成员共用内存空间，减少引用，这样内存占用降低，变量的操作速度得到提升。</li>
+<li>字符串结构体的改变，字符串信息和数据本身原来是分成两个独立内存块存放，php7尽量将它们存入同一块内存，提升了cpu缓存命中率。</li>
+<li>数组结构的改变，数组元素和hash映射表在php5中会存入多个内存块，php7尽量将它们分配在同一块内存里，降低了内存占用、提升了cpu缓存命中率。</li>
+<li>改进了函数的调用机制，通过对参数传递环节的优化，减少一些指令操作，提高了执行效率。</li>
+</ol>
+<h2 id="php7的新特征">PHP7的新特征</h2>
+<p><em>注：只记录了个人会使用的特征。</em></p>
+<ol>
+<li>null合并运算符<br>
+$data[&ldquo;key&rdquo;] ?? &quot;&rdquo;</li>
+<li>常量数组<br>
+可以通过define定义数组, define(&ldquo;XXX_ARRAY&rdquo;, [1, 2, 3])</li>
+<li>错误处理<br>
+PHP 7 改变了大多数错误的报告方式。不同于 PHP 5 的传统错误报告机制，现在大多数错误被作为 Error 异常抛出。可以被try catch捕获，没有则被 set_exception_handler处理，否则按传统方式处理，抛出一个fatal错误。Error异常与Exception同级，可以通过Error或Throwable捕获。</li>
+<li>参数的标量类型与返回值类型申明</li>
+</ol>
+
+    </div>
+
+    
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/php/">PHP</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/php/20200812php%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">PHP错误处理</span>
+            <span class="prev-text nav-mobile"></span>
+          </a>
+        <a class="next" href="/post/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E9%97%B4%E4%BB%B6/20200810%E6%90%AD%E5%BB%BAmysql%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4/">
+            <span class="next-text nav-default">搭建Mysql主从集群</span>
+            <span class="next-text nav-mobile"></span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    %!(EXTRA string=<a class="hexo-link" href="https://gohugo.io">Hugo</a>)
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+     - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">dowle</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>

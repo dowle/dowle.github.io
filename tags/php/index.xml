@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PHP on 杜东为的博客</title>
+    <link>/tags/php/</link>
+    <description>Recent content in PHP on 杜东为的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 12 Aug 2020 16:07:40 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/php/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>PHP的自动加载</title>
+      <link>/post/php/20200812php%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD/</link>
+      <pubDate>Wed, 12 Aug 2020 16:07:40 +0800</pubDate>
+      
+      <guid>/post/php/20200812php%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD/</guid>
+      <description>自动加载 尝试加载未定义的类。 最原始的加载方式是手动include类文件，但是在类文件很多时，比较繁琐不够智能，所以PHP提供了自动加载类的机</description>
+    </item>
+    
+    <item>
+      <title>PHP错误处理</title>
+      <link>/post/php/20200812php%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/</link>
+      <pubDate>Wed, 12 Aug 2020 14:59:16 +0800</pubDate>
+      
+      <guid>/post/php/20200812php%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/</guid>
+      <description>错误说明 在 PHP 中，默认的错误处理很简单。一条错误消息会被发送到浏览器，这条消息带有文件名、行号以及描述错误的消息。 错误相关的配置: 配置项 默认值</description>
+    </item>
+    
+    <item>
+      <title>PHP7新特性</title>
+      <link>/post/php/20200812php7/</link>
+      <pubDate>Wed, 12 Aug 2020 10:55:02 +0800</pubDate>
+      
+      <guid>/post/php/20200812php7/</guid>
+      <description>PHP7与PHP5的性能比较 注：因为对PHP内核不了解，信息来源于网上。 PHP7比PHP5快3倍以上。 本质上来说就是对zend 引擎的优化，减</description>
+    </item>
+    
+  </channel>
+</rss>

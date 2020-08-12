@@ -6,10 +6,19 @@
     <description>Recent content in Tags on 杜东为的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 10 Aug 2020 14:45:57 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 12 Aug 2020 16:07:40 +0800</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>PHP</title>
+      <link>/tags/php/</link>
+      <pubDate>Wed, 12 Aug 2020 16:07:40 +0800</pubDate>
+      
+      <guid>/tags/php/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Mysql</title>
