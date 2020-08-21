@@ -6,10 +6,19 @@
     <description>Recent content in Posts on 杜东为的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 12 Aug 2020 16:07:40 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 21 Aug 2020 15:01:27 +0800</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>20200821mysql锁</title>
+      <link>/post/%E6%95%B0%E6%8D%AE%E5%BA%93/20200821mysql%E9%94%81/</link>
+      <pubDate>Fri, 21 Aug 2020 15:01:27 +0800</pubDate>
+      
+      <guid>/post/%E6%95%B0%E6%8D%AE%E5%BA%93/20200821mysql%E9%94%81/</guid>
+      <description>https://www.cnblogs.com/aaron-agu/p/13461162.html</description>
+    </item>
     
     <item>
       <title>PHP的自动加载</title>
@@ -40,10 +49,10 @@
     
     <item>
       <title>搭建Mysql主从集群</title>
-      <link>/post/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E9%97%B4%E4%BB%B6/20200810%E6%90%AD%E5%BB%BAmysql%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4/</link>
+      <link>/post/%E6%95%B0%E6%8D%AE%E5%BA%93/20200810%E6%90%AD%E5%BB%BAmysql%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4/</link>
       <pubDate>Mon, 10 Aug 2020 14:45:57 +0800</pubDate>
       
-      <guid>/post/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E9%97%B4%E4%BB%B6/20200810%E6%90%AD%E5%BB%BAmysql%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4/</guid>
+      <guid>/post/%E6%95%B0%E6%8D%AE%E5%BA%93/20200810%E6%90%AD%E5%BB%BAmysql%E4%B8%BB%E4%BB%8E%E9%9B%86%E7%BE%A4/</guid>
       <description>Mysql主从的作用 数据热备：作为后备数据库。在主库出现故障后，能够切换成为主库，继续提供服务。 架构扩展：业务越来越大，数据的io、网络等压</description>
     </item>
     
