@@ -2,13 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>/post/%E6%95%B0%E6%8D%AE%E5%BA%93/20200821mysql%E9%94%81/</loc>
-    <lastmod>2020-08-21T15:01:27+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>/categories/</loc>
     <lastmod>2020-08-21T15:01:27+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -17,6 +10,13 @@
   
   <url>
     <loc>/tags/mysql/</loc>
+    <lastmod>2020-08-21T15:01:27+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/post/%E6%95%B0%E6%8D%AE%E5%BA%93/20200821mysql%E9%94%81/</loc>
     <lastmod>2020-08-21T15:01:27+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

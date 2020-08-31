@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>20200821mysql锁 - 杜东为的博客</title>
+  <title>mysql锁 - 杜东为的博客</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -40,13 +40,13 @@
 <link rel="stylesheet" href="/css/even_hide.css">
 
 
-<meta property="og:title" content="20200821mysql锁" />
+<meta property="og:title" content="mysql锁" />
 <meta property="og:description" content="锁的简介 锁是计算机协调多个进程或线程并发访问某一资源的机制。锁保证数据并发访问的一致性、有效性；锁冲突也是影响数据库并发访问性能的一个重要因" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/post/%E6%95%B0%E6%8D%AE%E5%BA%93/20200821mysql%E9%94%81/" />
 <meta property="article:published_time" content="2020-08-21T15:01:27+08:00" />
 <meta property="article:modified_time" content="2020-08-21T15:01:27+08:00" />
-<meta itemprop="name" content="20200821mysql锁">
+<meta itemprop="name" content="mysql锁">
 <meta itemprop="description" content="锁的简介 锁是计算机协调多个进程或线程并发访问某一资源的机制。锁保证数据并发访问的一致性、有效性；锁冲突也是影响数据库并发访问性能的一个重要因">
 <meta itemprop="datePublished" content="2020-08-21T15:01:27+08:00" />
 <meta itemprop="dateModified" content="2020-08-21T15:01:27+08:00" />
@@ -56,7 +56,7 @@
 
 <meta itemprop="keywords" content="数据库,MySQL,锁," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="20200821mysql锁"/>
+<meta name="twitter:title" content="mysql锁"/>
 <meta name="twitter:description" content="锁的简介 锁是计算机协调多个进程或线程并发访问某一资源的机制。锁保证数据并发访问的一致性、有效性；锁冲突也是影响数据库并发访问性能的一个重要因"/>
 
 <!--[if lte IE 9]>
@@ -120,7 +120,7 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">20200821mysql锁</h1>
+      <h1 class="post-title">mysql锁</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2020-08-21 </span>
@@ -190,7 +190,7 @@
 <p>InnoDB 实现了以下两种类型的行锁：</p>
 <ul>
 <li>共享锁（S）：允许一个事务去读一行，阻止其他事务获得相同数据集的排他锁。</li>
-<li>排他锁（X）：允许获得排他锁的事务更新数据，阻止其他事务取得相同数据集的共享读锁和排他写锁。
+<li>排他锁（X）：允许获得排他锁的事务更新数据，阻止其他事务取得相同数据集的共享读锁和排他写锁。<br>
 为了允许行锁和表锁共存，实现多粒度锁机制，InnoDB 还有两种内部使用的意向锁（Intention Locks），这两种意向锁都是表锁：</li>
 <li>意向共享锁（IS）：事务打算给数据行加行共享锁，事务在给一个数据行加共享锁前必须先取得该表的 IS 锁。</li>
 <li>意向排他锁（IX）：事务打算给数据行加行排他锁，事务在给一个数据行加排他锁前必须先取得该表的 IX 锁。</li>
@@ -220,8 +220,8 @@
 <li>分析加锁情况时，需要通过explain分析sql执行计划来观察实际使用的索引</li>
 </ul>
 <h4 id="innodb的间隙锁">INNODB的间隙锁</h4>
-<p>当我们用范围条件而不是相等条件检索数据，并请求共享或排他锁时，InnoDB会给符合条件的已有数据记录的索引项加锁；对于键值在条件范围内但并不存在的记录，叫做“间隙（GAP)”，InnoDB也会对这个“间隙”加锁，这种锁机制就是所谓的间隙锁（Next-Key锁）。<br>
-很显然，在使用范围条件检索并锁定记录时，InnoDB这种加锁机制会阻塞符合条件范围内键值的并发插入，这往往会造成严重的锁等待。因此，在实际应用开发中，尤其是并发插入比较多的应用，我们要尽量优化业务逻辑，尽量使用相等条件来访问更新数据，避免使用范围条件。<br>
+<p>当我们用范围条件而不是相等条件检索数据，并请求共享或排他锁时，InnoDB会给符合条件的已有数据记录的索引项加锁；对于键值在条件范围内但并不存在的记录，叫做“间隙（GAP)”，InnoDB也会对这个“间隙”加锁，这种锁机制就是所谓的间隙锁（Next-Key锁）。</p>
+<p>很显然，在使用范围条件检索并锁定记录时，InnoDB这种加锁机制会阻塞符合条件范围内键值的并发插入，这往往会造成严重的锁等待。因此，在实际应用开发中，尤其是并发插入比较多的应用，我们要尽量优化业务逻辑，尽量使用相等条件来访问更新数据，避免使用范围条件。<br>
 <strong>普通索引的等值查询，也会加间隙锁。防止幻读</strong><br>
 InnoDB使用间隙锁的目的：</p>
 <ol>
