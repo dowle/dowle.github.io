@@ -50,7 +50,7 @@
 <meta itemprop="description" content="Mysql主从的作用 数据热备：作为后备数据库。在主库出现故障后，能够切换成为主库，继续提供服务。 架构扩展：业务越来越大，数据的io、网络等压">
 <meta itemprop="datePublished" content="2020-08-10T14:45:57+08:00" />
 <meta itemprop="dateModified" content="2020-08-10T14:45:57+08:00" />
-<meta itemprop="wordCount" content="890">
+<meta itemprop="wordCount" content="954">
 
 
 
@@ -164,6 +164,7 @@
 <p><strong>本文使用docker搭建，仅用于开发测试</strong></p>
 <h3 id="启动mysql示例">启动mysql示例</h3>
 <p>搭建1主2从的集群，其中3001对应主库，3002、3003对应从库<br>
+这里的read-only配置只对非特权用户有效。flush tables with read lock; (解锁: unlock tables;)对所有用户有效。<br>
 编辑配置文件</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -181,22 +182,32 @@
 </span><span class="lnt">12
 </span><span class="lnt">13
 </span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-ini" data-lang="ini"><span class="na">dowle@dowle-pc:/data/docker/mysql-cluster$ cat 3001.cnf </span>
 <span class="k">[mysqld]</span>
 <span class="na">log-bin</span><span class="o">=</span><span class="s">mysql-bin</span>
 <span class="na">server-id</span><span class="o">=</span><span class="s">3001</span>
+<span class="na">expire_logs_days</span><span class="o">=</span><span class="s">30</span>
 
 <span class="na">dowle@dowle-pc:/data/docker/mysql-cluster$ cat 3002.cnf </span>
 <span class="k">[mysqld]</span>
 <span class="na">log-bin</span><span class="o">=</span><span class="s">mysql-bin</span>
 <span class="na">server-id</span><span class="o">=</span><span class="s">3002</span>
+<span class="na">read-only</span><span class="o">=</span><span class="s">1</span>
+<span class="na">expire_logs_days</span><span class="o">=</span><span class="s">30</span>
 
 <span class="na">dowle@dowle-pc:/data/docker/mysql-cluster$ cat 3003.cnf </span>
 <span class="k">[mysqld]</span>
 <span class="na">log-bin</span><span class="o">=</span><span class="s">mysql-bin</span>
 <span class="na">server-id</span><span class="o">=</span><span class="s">3003</span>
+<span class="na">read-only</span><span class="o">=</span><span class="s">1</span>
+<span class="na">expire_logs_days</span><span class="o">=</span><span class="s">30</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>启动实例</p>
@@ -209,11 +220,11 @@
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">docker run -d --name <span class="m">3001</span> -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/3001.cnf:/etc/mysql/conf.d/cluster.cnf -p 3001:3306 -e <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span><span class="m">123456</span> mysql
+<pre class="chroma"><code class="language-bash" data-lang="bash">docker run -d --name <span class="m">3001</span> -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/3001.cnf:/etc/mysql/conf.d/cluster.cnf -p 3001:3306 -e <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span><span class="m">123456</span> mysql:5.7
 
-docker run -d --name <span class="m">3002</span> -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/3002.cnf:/etc/mysql/conf.d/cluster.cnf -p 3002:3306 -e <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span><span class="m">123456</span> mysql
+docker run -d --name <span class="m">3002</span> -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/3002.cnf:/etc/mysql/conf.d/cluster.cnf -p 3002:3306 -e <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span><span class="m">123456</span> mysql:5.7
 
-docker run -d --name <span class="m">3003</span> -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/3003.cnf:/etc/mysql/conf.d/cluster.cnf -p 3003:3306 -e <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span><span class="m">123456</span> mysql
+docker run -d --name <span class="m">3003</span> -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/3003.cnf:/etc/mysql/conf.d/cluster.cnf -p 3003:3306 -e <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span><span class="m">123456</span> mysql:5.7
 </code></pre></td></tr></table>
 </div>
 </div><p>测试<br>
@@ -286,7 +297,7 @@ mysql -p123456
 <span class="c1"># 暂停slave</span>
 stop slave<span class="p">;</span>
 <span class="c1"># 配置主库信息 - 这里的ip为master为docker内ip</span>
-change master to <span class="nv">master_host</span><span class="o">=</span><span class="s2">&#34;172.17.0.2&#34;</span>,master_user<span class="o">=</span><span class="s2">&#34;slave&#34;</span>,master_password<span class="o">=</span><span class="s2">&#34;slave&#34;</span>,master_log_file<span class="o">=</span><span class="s2">&#34;mysql-bin.000003&#34;</span>,master_log_pos<span class="o">=</span>856<span class="p">;</span>
+change master to <span class="nv">master_host</span><span class="o">=</span><span class="s2">&#34;172.17.0.3&#34;</span>,master_user<span class="o">=</span><span class="s2">&#34;slave&#34;</span>,master_password<span class="o">=</span><span class="s2">&#34;slave&#34;</span>,master_log_file<span class="o">=</span><span class="s2">&#34;mysql-bin.000003&#34;</span>,master_log_pos<span class="o">=</span>746<span class="p">;</span>
 <span class="c1"># 开启slave</span>
 start slave<span class="p">;</span>
 <span class="c1"># 查看同步状态: Slave_IO_Running、Slave_SQL_Running 是否为Yes，若不是则查看错误信息。Seconds_Behind_Master 表示落后主库的时间</span>
