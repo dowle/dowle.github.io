@@ -6,10 +6,24 @@
     <description>Recent content on 杜东为的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 21 Aug 2020 15:01:27 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 17 Sep 2020 18:38:59 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>git_commit规范</title>
+      <link>/post/vcs/20200917git_commit%E8%A7%84%E8%8C%83/</link>
+      <pubDate>Thu, 17 Sep 2020 18:38:59 +0800</pubDate>
+      
+      <guid>/post/vcs/20200917git_commit%E8%A7%84%E8%8C%83/</guid>
+      <description>背景 Git每次提交代码都需要写commit message，否则就不允许提交。一般来说，commit message应该清晰明了，说明本次提交的</description>
+    </item>
     
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
-    
+    <item>
+      <title>MAC git仓库多key配置</title>
+      <link>/post/vcs/20200917mac_git%E5%A4%9Akey%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Thu, 17 Sep 2020 18:25:47 +0800</pubDate>
+      
+      <guid>/post/vcs/20200917mac_git%E5%A4%9Akey%E9%85%8D%E7%BD%AE/</guid>
+      <description>前言 SSH 是连接远程主机最常用的方式，尽管连接到单个主机的基本操作非常直接，但当你开始使用大量的远程系统时，这就会成为笨重和复杂的任务。 幸运的</description>
+    </item>
     
     <item>
       <title>mysql锁</title>

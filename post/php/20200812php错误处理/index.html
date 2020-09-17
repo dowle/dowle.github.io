@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.74.3 with theme even" />
+<meta name="generator" content="Hugo 0.75.1 with theme even" />
 
 
 <link rel="canonical" href="/post/php/20200812php%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/" />
@@ -153,31 +153,31 @@
 <table>
 <thead>
 <tr>
-<th align="left">配置项</th>
-<th align="left"><img width="100"/>默认值</th>
-<th align="left">说明</th>
+<th style="text-align:left">配置项</th>
+<th style="text-align:left"><img width="100"/>默认值</th>
+<th style="text-align:left">说明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">error_reporting</td>
-<td align="left">null</td>
-<td align="left">设置 PHP 的报错级别并返回当前级别(数字或常量)。</td>
+<td style="text-align:left">error_reporting</td>
+<td style="text-align:left">null</td>
+<td style="text-align:left">设置 PHP 的报错级别并返回当前级别(数字或常量)。</td>
 </tr>
 <tr>
-<td align="left">display_errors</td>
-<td align="left">1</td>
-<td align="left">该选项设置是否将错误信息作为输出的一部分显示到屏幕，或者对用户隐藏而不显示。<br/><em>注意: 该特性不要在上线生产环境中使用 (在开发测试过程中使用)</em></td>
+<td style="text-align:left">display_errors</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">该选项设置是否将错误信息作为输出的一部分显示到屏幕，或者对用户隐藏而不显示。<br/><em>注意: 该特性不要在上线生产环境中使用 (在开发测试过程中使用)</em></td>
 </tr>
 <tr>
-<td align="left">log_errors</td>
-<td align="left">0</td>
-<td align="left">设置是否将脚本运行的错误信息记录到服务器错误日志或者error_log之中</td>
+<td style="text-align:left">log_errors</td>
+<td style="text-align:left">0</td>
+<td style="text-align:left">设置是否将脚本运行的错误信息记录到服务器错误日志或者error_log之中</td>
 </tr>
 <tr>
-<td align="left">error_log</td>
-<td align="left">null</td>
-<td align="left">设置脚本错误将被记录到的文件</td>
+<td style="text-align:left">error_log</td>
+<td style="text-align:left">null</td>
+<td style="text-align:left">设置脚本错误将被记录到的文件</td>
 </tr>
 </tbody>
 </table>
@@ -200,26 +200,26 @@
 <table>
 <thead>
 <tr>
-<th align="left">函数名</th>
-<th align="left">说明</th>
+<th style="text-align:left">函数名</th>
+<th style="text-align:left">说明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">error_reporting</td>
-<td align="left">指定错误报告级别，其中-1表示显示所有错误，0表示关闭错误，无参数表示获取当前的错误级别，其他参数表示设置具体的错误级别</td>
+<td style="text-align:left">error_reporting</td>
+<td style="text-align:left">指定错误报告级别，其中-1表示显示所有错误，0表示关闭错误，无参数表示获取当前的错误级别，其他参数表示设置具体的错误级别</td>
 </tr>
 <tr>
-<td align="left">set_error_handler</td>
-<td align="left">注册错误的处理器</td>
+<td style="text-align:left">set_error_handler</td>
+<td style="text-align:left">注册错误的处理器</td>
 </tr>
 <tr>
-<td align="left">set_exception_handler</td>
-<td align="left">注册异常的处理器</td>
+<td style="text-align:left">set_exception_handler</td>
+<td style="text-align:left">注册异常的处理器</td>
 </tr>
 <tr>
-<td align="left">register_shutdown_function</td>
-<td align="left">注册一个会在PHP中止时执行的函数，包括正常中止、exit中止、致命错误中止</td>
+<td style="text-align:left">register_shutdown_function</td>
+<td style="text-align:left">注册一个会在PHP中止时执行的函数，包括正常中止、exit中止、致命错误中止</td>
 </tr>
 </tbody>
 </table>
@@ -268,43 +268,43 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-php" data-lang="php">
-// 定义一个注册错误的trait类
-trait RegistersExceptionHandlers
-{
-    /**
-     * 设置错误handler
-     *
-     * @return void
-     */
-    protected function registerErrorHandling()
-    {
-        // 报告所有错误
-        error_reporting(-1);
+<span class="c1">// 定义一个注册错误的trait类
+</span><span class="c1"></span><span class="k">trait</span> <span class="nx">RegistersExceptionHandlers</span>
+<span class="p">{</span>
+    <span class="sd">/**
+</span><span class="sd">     * 设置错误handler
+</span><span class="sd">     *
+</span><span class="sd">     * @return void
+</span><span class="sd">     */</span>
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">registerErrorHandling</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">// 报告所有错误
+</span><span class="c1"></span>        <span class="nx">error_reporting</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
 
-        // 注册错误处理
-        set_error_handler(function ($level, $message, $file = &#39;&#39;, $line = 0) {
-            // 抛出错误异常
-            throw new ErrorException($message, 0, $level, $file, $line);
-        });
+        <span class="c1">// 注册错误处理
+</span><span class="c1"></span>        <span class="nx">set_error_handler</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nv">$level</span><span class="p">,</span> <span class="nv">$message</span><span class="p">,</span> <span class="nv">$file</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nv">$line</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// 抛出错误异常
+</span><span class="c1"></span>            <span class="k">throw</span> <span class="k">new</span> <span class="nx">ErrorException</span><span class="p">(</span><span class="nv">$message</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">$level</span><span class="p">,</span> <span class="nv">$file</span><span class="p">,</span> <span class="nv">$line</span><span class="p">);</span>
+        <span class="p">});</span>
 
-        // 注册异常处理
-        set_exception_handler(function ($e) {
-            // 这里是一个统一的异常handler -- 需要实现，主要包括记录日志、异常时返回等
-            $handler = (object)[];
-            $handler-&gt;report($e);
-        });
+        <span class="c1">// 注册异常处理
+</span><span class="c1"></span>        <span class="nx">set_exception_handler</span><span class="p">(</span><span class="k">function</span> <span class="p">(</span><span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// 这里是一个统一的异常handler -- 需要实现，主要包括记录日志、异常时返回等
+</span><span class="c1"></span>            <span class="nv">$handler</span> <span class="o">=</span> <span class="p">(</span><span class="nx">object</span><span class="p">)[];</span>
+            <span class="nv">$handler</span><span class="o">-&gt;</span><span class="na">report</span><span class="p">(</span><span class="nv">$e</span><span class="p">);</span>
+        <span class="p">});</span>
 
-        // 注册中止处理函数
-        register_shutdown_function(function () {
-            // 主要捕获错误
-            if ( ! is_null($error = error_get_last())) {
-                // 抛出错误异常
-                throw new ErrorException($error[&#39;message&#39;], 0, $error[&#39;type&#39;],
-                    $error[&#39;file&#39;], $error[&#39;line&#39;]);
-            }
-        });
-    }
-}
+        <span class="c1">// 注册中止处理函数
+</span><span class="c1"></span>        <span class="nx">register_shutdown_function</span><span class="p">(</span><span class="k">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="c1">// 主要捕获错误
+</span><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span> <span class="o">!</span> <span class="nx">is_null</span><span class="p">(</span><span class="nv">$error</span> <span class="o">=</span> <span class="nx">error_get_last</span><span class="p">()))</span> <span class="p">{</span>
+                <span class="c1">// 抛出错误异常
+</span><span class="c1"></span>                <span class="k">throw</span> <span class="k">new</span> <span class="nx">ErrorException</span><span class="p">(</span><span class="nv">$error</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">$error</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">],</span>
+                    <span class="nv">$error</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">],</span> <span class="nv">$error</span><span class="p">[</span><span class="s1">&#39;line&#39;</span><span class="p">]);</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
 </div>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ssh on 杜东为的博客</title>
+    <link>/tags/ssh/</link>
+    <description>Recent content in ssh on 杜东为的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 17 Sep 2020 18:25:47 +0800</lastBuildDate><atom:link href="/tags/ssh/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MAC git仓库多key配置</title>
+      <link>/post/vcs/20200917mac_git%E5%A4%9Akey%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Thu, 17 Sep 2020 18:25:47 +0800</pubDate>
+      
+      <guid>/post/vcs/20200917mac_git%E5%A4%9Akey%E9%85%8D%E7%BD%AE/</guid>
+      <description>前言 SSH 是连接远程主机最常用的方式，尽管连接到单个主机的基本操作非常直接，但当你开始使用大量的远程系统时，这就会成为笨重和复杂的任务。 幸运的</description>
+    </item>
+    
+  </channel>
+</rss>

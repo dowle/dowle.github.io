@@ -6,10 +6,24 @@
     <description>Recent content in Categories on 杜东为的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 21 Aug 2020 15:01:27 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 17 Sep 2020 18:38:59 +0800</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>VCS</title>
+      <link>/categories/vcs/</link>
+      <pubDate>Thu, 17 Sep 2020 18:38:59 +0800</pubDate>
+      
+      <guid>/categories/vcs/</guid>
+      <description></description>
+    </item>
     
-	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
-    
+    <item>
+      <title>CVS</title>
+      <link>/categories/cvs/</link>
+      <pubDate>Thu, 17 Sep 2020 18:25:47 +0800</pubDate>
+      
+      <guid>/categories/cvs/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>数据库</title>

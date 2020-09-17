@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.74.3 with theme even" />
+<meta name="generator" content="Hugo 0.75.1 with theme even" />
 
 
 <link rel="canonical" href="/post/php/20200812php%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD/" />
@@ -170,12 +170,12 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-php" data-lang="php">// 自动加载，php7.2后被抛弃
-function __autoload($className) {
-    // 通过一定的规则定位到文件路径并加载
-    $fileName = $className . &#34;.php&#34;;
-    include $fileName;
-}
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="c1">// 自动加载，php7.2后被抛弃
+</span><span class="c1"></span><span class="k">function</span> <span class="nf">__autoload</span><span class="p">(</span><span class="nv">$className</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 通过一定的规则定位到文件路径并加载
+</span><span class="c1"></span>    <span class="nv">$fileName</span> <span class="o">=</span> <span class="nv">$className</span> <span class="o">.</span> <span class="s2">&#34;.php&#34;</span><span class="p">;</span>
+    <span class="k">include</span> <span class="nv">$fileName</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -199,20 +199,20 @@ function __autoload($className) {
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-php" data-lang="php">// 定义加载类
-class AutoLoader
-{
+<pre class="chroma"><code class="language-php" data-lang="php"><span class="c1">// 定义加载类
+</span><span class="c1"></span><span class="k">class</span> <span class="nc">AutoLoader</span>
+<span class="p">{</span>
 
-    public static function load(string $className)
-    {
-        // 通过一定的规则定位到文件路径并加载
-        $fileName = $className . &#34;.php&#34;;
-        include $fileName;
-    }
-}
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">load</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$className</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// 通过一定的规则定位到文件路径并加载
+</span><span class="c1"></span>        <span class="nv">$fileName</span> <span class="o">=</span> <span class="nv">$className</span> <span class="o">.</span> <span class="s2">&#34;.php&#34;</span><span class="p">;</span>
+        <span class="k">include</span> <span class="nv">$fileName</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-// 注册加载
-spl_autoload_register(&#34;AutoLoader::load&#34;);
+<span class="c1">// 注册加载
+</span><span class="c1"></span><span class="nx">spl_autoload_register</span><span class="p">(</span><span class="s2">&#34;AutoLoader::load&#34;</span><span class="p">);</span>
 </code></pre></td></tr></table>
 </div>
 </div>

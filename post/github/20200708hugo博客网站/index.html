@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.74.3 with theme even" />
+<meta name="generator" content="Hugo 0.75.1 with theme even" />
 
 
 <link rel="canonical" href="/post/github/20200708hugo%E5%8D%9A%E5%AE%A2%E7%BD%91%E7%AB%99/" />
@@ -50,7 +50,7 @@
 <meta itemprop="description" content="使用hugo doc 安装 这里采用github包的方式，下载地址 将hugo加入环境变量中 验证是否成功 1 hugo version 初始化项目 1 2 3 hugo new site 项目名 cd 项目 git init 使用">
 <meta itemprop="datePublished" content="2020-07-08T18:26:13+08:00" />
 <meta itemprop="dateModified" content="2020-07-08T18:26:13+08:00" />
-<meta itemprop="wordCount" content="776">
+<meta itemprop="wordCount" content="739">
 
 
 
@@ -283,40 +283,40 @@ git init
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># 工作流名</span><span class="w">
-</span><span class="w"></span><span class="k">name</span><span class="p">:</span><span class="w"> </span>github<span class="w"> </span>pages<span class="w"> </span>deploy<span class="w">
+</span><span class="w"></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">github pages deploy</span><span class="w">
 </span><span class="w"></span><span class="c"># 触发条件</span><span class="w">
-</span><span class="w"></span><span class="k">on</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">push</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">branches</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span>master<span class="w"> </span><span class="p">]</span><span class="w">
-</span><span class="w">  </span><span class="k">pull_request</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">branches</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span>master<span class="w"> </span><span class="p">]</span><span class="w">
+</span><span class="w"></span><span class="nt">on</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">push</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="l">master ]</span><span class="w">
+</span><span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="l">master ]</span><span class="w">
 </span><span class="w">
 </span><span class="w"></span><span class="c"># 任务</span><span class="w">
-</span><span class="w"></span><span class="k">jobs</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="nt">jobs</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="c"># 一个部署pages的任务</span><span class="w">
-</span><span class="w">  </span><span class="k">deloy-pages</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">deloy-pages</span><span class="p">:</span><span class="w">
 </span><span class="w">    </span><span class="c"># 运行runner</span><span class="w">
-</span><span class="w">    </span><span class="k">runs-on</span><span class="p">:</span><span class="w"> </span>ubuntu-latest<span class="w">
+</span><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-latest</span><span class="w">
 </span><span class="w">
 </span><span class="w">    </span><span class="c"># 执行步骤</span><span class="w">
-</span><span class="w">    </span><span class="k">steps</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
 </span><span class="w">    </span><span class="c"># checkout仓库，才能进行后续操作</span><span class="w">
-</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>checkout<span class="w"> 
-</span><span class="w">      </span><span class="k">uses</span><span class="p">:</span><span class="w"> </span>actions/checkout@v2<span class="w">
+</span><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">checkout </span><span class="w">
+</span><span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/checkout@v2</span><span class="w">
 </span><span class="w">
 </span><span class="w">    </span><span class="c"># hugo生成静态文件</span><span class="w">
-</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>hugo-setup<span class="w">
-</span><span class="w">      </span><span class="k">uses</span><span class="p">:</span><span class="w"> </span>peaceiris/actions-hugo@v2<span class="m">.4.12</span><span class="w">
-</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>hugo-build<span class="w">
-</span><span class="w">      </span><span class="k">run</span><span class="p">:</span><span class="w"> </span>hugo<span class="w">
+</span><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">hugo-setup</span><span class="w">
+</span><span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">peaceiris/actions-hugo@v2.4.12</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">hugo-build</span><span class="w">
+</span><span class="w">      </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">hugo</span><span class="w">
 </span><span class="w">
 </span><span class="w">    </span><span class="c"># 部署pages</span><span class="w">
-</span><span class="w">    </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>deploy-pages<span class="w">
-</span><span class="w">      </span><span class="k">uses</span><span class="p">:</span><span class="w"> </span>peaceiris/actions-gh-pages@v3<span class="m">.6.1</span><span class="w">
-</span><span class="w">      </span><span class="k">with</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">publish_branch</span><span class="p">:</span><span class="w"> </span>gh-pages<span class="w">
-</span><span class="w">        </span><span class="k">publish_dir</span><span class="p">:</span><span class="w"> </span>public<span class="w">
-</span><span class="w">        </span><span class="k">github_token</span><span class="p">:</span><span class="w"> </span>${{<span class="w"> </span>secrets.GITHUB_TOKEN<span class="w"> </span>}}<span class="w">
+</span><span class="w">    </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">deploy-pages</span><span class="w">
+</span><span class="w">      </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">peaceiris/actions-gh-pages@v3.6.1</span><span class="w">
+</span><span class="w">      </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">publish_branch</span><span class="p">:</span><span class="w"> </span><span class="l">gh-pages</span><span class="w">
+</span><span class="w">        </span><span class="nt">publish_dir</span><span class="p">:</span><span class="w"> </span><span class="l">public</span><span class="w">
+</span><span class="w">        </span><span class="nt">github_token</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.GITHUB_TOKEN }}</span><span class="w">
 </span><span class="w">
 </span></code></pre></td></tr></table>
 </div>

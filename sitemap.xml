@@ -3,7 +3,77 @@
   
   <url>
     <loc>/categories/</loc>
-    <lastmod>2020-08-21T15:01:27+08:00</lastmod>
+    <lastmod>2020-09-17T18:38:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/git/</loc>
+    <lastmod>2020-09-17T18:38:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/post/vcs/20200917git_commit%E8%A7%84%E8%8C%83/</loc>
+    <lastmod>2020-09-17T18:38:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2020-09-17T18:38:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2020-09-17T18:38:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/vcs/</loc>
+    <lastmod>2020-09-17T18:38:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2020-09-17T18:38:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/%E8%A7%84%E8%8C%83/</loc>
+    <lastmod>2020-09-17T18:38:59+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/cvs/</loc>
+    <lastmod>2020-09-17T18:25:47+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/post/vcs/20200917mac_git%E5%A4%9Akey%E9%85%8D%E7%BD%AE/</loc>
+    <lastmod>2020-09-17T18:25:47+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/ssh/</loc>
+    <lastmod>2020-09-17T18:25:47+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -23,20 +93,6 @@
   </url>
   
   <url>
-    <loc>/post/</loc>
-    <lastmod>2020-08-21T15:01:27+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-    <lastmod>2020-08-21T15:01:27+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
     <lastmod>2020-08-21T15:01:27+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -45,13 +101,6 @@
   
   <url>
     <loc>/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
-    <lastmod>2020-08-21T15:01:27+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>/</loc>
     <lastmod>2020-08-21T15:01:27+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
