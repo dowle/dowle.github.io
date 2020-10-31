@@ -1,299 +1,49 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>PHP的自动加载 - 杜东为的博客</title>
-  <meta name="renderer" content="webkit" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>PHP的自动加载 - 杜东为的博客</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="dowle"><meta name=description content="自动加载 尝试加载未定义的类。 最原始的加载方式是手动include类文件，但是在类文件很多时，比较繁琐不够智能，所以PHP提供了自动加载类的机"><meta name=keywords content="golang,数据库,系统架构"><meta name=generator content="Hugo 0.75.0 with theme even"><link rel=canonical href=/post/php/20200812php%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><link rel=stylesheet href=/css/even_hide.css><meta property="og:title" content="PHP的自动加载"><meta property="og:description" content="自动加载 尝试加载未定义的类。 最原始的加载方式是手动include类文件，但是在类文件很多时，比较繁琐不够智能，所以PHP提供了自动加载类的机"><meta property="og:type" content="article"><meta property="og:url" content="/post/php/20200812php%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD/"><meta property="article:published_time" content="2020-08-12T16:07:40+08:00"><meta property="article:modified_time" content="2020-08-12T16:07:40+08:00"><meta itemprop=name content="PHP的自动加载"><meta itemprop=description content="自动加载 尝试加载未定义的类。 最原始的加载方式是手动include类文件，但是在类文件很多时，比较繁琐不够智能，所以PHP提供了自动加载类的机"><meta itemprop=datePublished content="2020-08-12T16:07:40+08:00"><meta itemprop=dateModified content="2020-08-12T16:07:40+08:00"><meta itemprop=wordCount content="329"><meta itemprop=keywords content="PHP,"><meta name=twitter:card content="summary"><meta name=twitter:title content="PHP的自动加载"><meta name=twitter:description content="自动加载 尝试加载未定义的类。 最原始的加载方式是手动include类文件，但是在类文件很多时，比较繁琐不够智能，所以PHP提供了自动加载类的机"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Dowle</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>首页</li></a><a href=/post/><li class=mobile-menu-item>归档</li></a><a href=/tags/><li class=mobile-menu-item>标签</li></a><a href=/categories/><li class=mobile-menu-item>分类</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Dowle</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>首页</a></li><li class=menu-item><a class=menu-item-link href=/post/>归档</a></li><li class=menu-item><a class=menu-item-link href=/tags/>标签</a></li><li class=menu-item><a class=menu-item-link href=/categories/>分类</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>PHP的自动加载</h1><div class=post-meta><span class=post-time>2020-08-12</span><div class=post-category><a href=/categories/php/>PHP</a></div></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title></h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><a href=#自动加载>自动加载</a></li><li><a href=#两者的区别>两者的区别</a></li><li><a href=#使用方法>使用方法</a></li></ul></li></ul></nav></div></div><div class=post-content><h2 id=自动加载>自动加载</h2><p>尝试加载未定义的类。<br>最原始的加载方式是手动include类文件，但是在类文件很多时，比较繁琐不够智能，所以PHP提供了自动加载类的机制。可以通过__autoload()魔术方法和register_autoload_function()方法来处理类的自动加载。</p><h2 id=两者的区别>两者的区别</h2><ol><li>__autoload只能注册一个，而register_autoload_function可以注册多个</li><li>__autoload在php7.2中已被抛弃</li></ol><h2 id=使用方法>使用方法</h2><ul><li>__autoload</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-php data-lang=php><span class=c1>// 自动加载，php7.2后被抛弃
+</span><span class=c1></span><span class=k>function</span> <span class=nf>__autoload</span><span class=p>(</span><span class=nv>$className</span><span class=p>)</span> <span class=p>{</span>
+    <span class=c1>// 通过一定的规则定位到文件路径并加载
+</span><span class=c1></span>    <span class=nv>$fileName</span> <span class=o>=</span> <span class=nv>$className</span> <span class=o>.</span> <span class=s2>&#34;.php&#34;</span><span class=p>;</span>
+    <span class=k>include</span> <span class=nv>$fileName</span><span class=p>;</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><ul><li>register_autoload_function</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-php data-lang=php><span class=c1>// 定义加载类
+</span><span class=c1></span><span class=k>class</span> <span class=nc>AutoLoader</span>
+<span class=p>{</span>
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+    <span class=k>public</span> <span class=k>static</span> <span class=k>function</span> <span class=nf>load</span><span class=p>(</span><span class=nx>string</span> <span class=nv>$className</span><span class=p>)</span>
+    <span class=p>{</span>
+        <span class=c1>// 通过一定的规则定位到文件路径并加载
+</span><span class=c1></span>        <span class=nv>$fileName</span> <span class=o>=</span> <span class=nv>$className</span> <span class=o>.</span> <span class=s2>&#34;.php&#34;</span><span class=p>;</span>
+        <span class=k>include</span> <span class=nv>$fileName</span><span class=p>;</span>
+    <span class=p>}</span>
+<span class=p>}</span>
 
-<meta name="theme-color" content="#f8f5ec" />
-<meta name="msapplication-navbutton-color" content="#f8f5ec">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
-
-
-<meta name="author" content="dowle" /><meta name="description" content="自动加载 尝试加载未定义的类。 最原始的加载方式是手动include类文件，但是在类文件很多时，比较繁琐不够智能，所以PHP提供了自动加载类的机" /><meta name="keywords" content="golang, 数据库, 系统架构" />
-
-
-
-
-
-
-<meta name="generator" content="Hugo 0.75.1 with theme even" />
-
-
-<link rel="canonical" href="/post/php/20200812php%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD/" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/manifest.json">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-
-
-
-<link href="/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
-<link rel="stylesheet" href="/css/even_hide.css">
-
-
-<meta property="og:title" content="PHP的自动加载" />
-<meta property="og:description" content="自动加载 尝试加载未定义的类。 最原始的加载方式是手动include类文件，但是在类文件很多时，比较繁琐不够智能，所以PHP提供了自动加载类的机" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="/post/php/20200812php%E7%9A%84%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD/" />
-<meta property="article:published_time" content="2020-08-12T16:07:40+08:00" />
-<meta property="article:modified_time" content="2020-08-12T16:07:40+08:00" />
-<meta itemprop="name" content="PHP的自动加载">
-<meta itemprop="description" content="自动加载 尝试加载未定义的类。 最原始的加载方式是手动include类文件，但是在类文件很多时，比较繁琐不够智能，所以PHP提供了自动加载类的机">
-<meta itemprop="datePublished" content="2020-08-12T16:07:40+08:00" />
-<meta itemprop="dateModified" content="2020-08-12T16:07:40+08:00" />
-<meta itemprop="wordCount" content="329">
-
-
-
-<meta itemprop="keywords" content="PHP," />
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="PHP的自动加载"/>
-<meta name="twitter:description" content="自动加载 尝试加载未定义的类。 最原始的加载方式是手动include类文件，但是在类文件很多时，比较繁琐不够智能，所以PHP提供了自动加载类的机"/>
-
-<!--[if lte IE 9]>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
-<![endif]-->
-
-<!--[if lt IE 9]>
-  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
-<![endif]-->
-
-</head>
-<body>
-  <div id="mobile-navbar" class="mobile-navbar">
-  <div class="mobile-header-logo">
-    <a href="/" class="logo">Dowle</a>
-  </div>
-  <div class="mobile-navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</div>
-<nav id="mobile-menu" class="mobile-menu slideout-menu">
-  <ul class="mobile-menu-list">
-    <a href="/">
-        <li class="mobile-menu-item">首页</li>
-      </a><a href="/post/">
-        <li class="mobile-menu-item">归档</li>
-      </a><a href="/tags/">
-        <li class="mobile-menu-item">标签</li>
-      </a><a href="/categories/">
-        <li class="mobile-menu-item">分类</li>
-      </a>
-  </ul>
-</nav>
-  <div class="container" id="mobile-panel">
-    <header id="header" class="header">
-        <div class="logo-wrapper">
-  <a href="/" class="logo">Dowle</a>
-</div>
-
-<nav class="site-navbar">
-  <ul id="menu" class="menu">
-    <li class="menu-item">
-        <a class="menu-item-link" href="/">首页</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/post/">归档</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/tags/">标签</a>
-      </li><li class="menu-item">
-        <a class="menu-item-link" href="/categories/">分类</a>
-      </li>
-  </ul>
-</nav>
-    </header>
-
-    <main id="main" class="main">
-      <div class="content-wrapper">
-        <div id="content" class="content">
-          <article class="post">
-    
-    <header class="post-header">
-      <h1 class="post-title">PHP的自动加载</h1>
-
-      <div class="post-meta">
-        <span class="post-time"> 2020-08-12 </span>
-        <div class="post-category">
-            <a href="/categories/php/"> PHP </a>
-            </div>
-        
-      </div>
-    </header>
-
-    <div class="post-toc" id="post-toc">
-  <h2 class="post-toc-title"></h2>
-  <div class="post-toc-content always-active">
-    <nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#自动加载">自动加载</a></li>
-        <li><a href="#两者的区别">两者的区别</a></li>
-        <li><a href="#使用方法">使用方法</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-  </div>
-</div>
-    <div class="post-content">
-      <h2 id="自动加载">自动加载</h2>
-<p>尝试加载未定义的类。<br>
-最原始的加载方式是手动include类文件，但是在类文件很多时，比较繁琐不够智能，所以PHP提供了自动加载类的机制。可以通过__autoload()魔术方法和register_autoload_function()方法来处理类的自动加载。</p>
-<h2 id="两者的区别">两者的区别</h2>
-<ol>
-<li>__autoload只能注册一个，而register_autoload_function可以注册多个</li>
-<li>__autoload在php7.2中已被抛弃</li>
-</ol>
-<h2 id="使用方法">使用方法</h2>
-<ul>
-<li>__autoload</li>
-</ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-php" data-lang="php"><span class="c1">// 自动加载，php7.2后被抛弃
-</span><span class="c1"></span><span class="k">function</span> <span class="nf">__autoload</span><span class="p">(</span><span class="nv">$className</span><span class="p">)</span> <span class="p">{</span>
-    <span class="c1">// 通过一定的规则定位到文件路径并加载
-</span><span class="c1"></span>    <span class="nv">$fileName</span> <span class="o">=</span> <span class="nv">$className</span> <span class="o">.</span> <span class="s2">&#34;.php&#34;</span><span class="p">;</span>
-    <span class="k">include</span> <span class="nv">$fileName</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li>register_autoload_function</li>
-</ul>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-php" data-lang="php"><span class="c1">// 定义加载类
-</span><span class="c1"></span><span class="k">class</span> <span class="nc">AutoLoader</span>
-<span class="p">{</span>
-
-    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">load</span><span class="p">(</span><span class="nx">string</span> <span class="nv">$className</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="c1">// 通过一定的规则定位到文件路径并加载
-</span><span class="c1"></span>        <span class="nv">$fileName</span> <span class="o">=</span> <span class="nv">$className</span> <span class="o">.</span> <span class="s2">&#34;.php&#34;</span><span class="p">;</span>
-        <span class="k">include</span> <span class="nv">$fileName</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="c1">// 注册加载
-</span><span class="c1"></span><span class="nx">spl_autoload_register</span><span class="p">(</span><span class="s2">&#34;AutoLoader::load&#34;</span><span class="p">);</span>
-</code></pre></td></tr></table>
-</div>
-</div>
-    </div>
-
-    
-<footer class="post-footer">
-      <div class="post-tags">
-          <a href="/tags/php/">PHP</a>
-          </div>
-      <nav class="post-nav">
-        <a class="prev" href="/post/%E6%95%B0%E6%8D%AE%E5%BA%93/20200821mysql%E9%94%81/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">mysql锁</span>
-            <span class="prev-text nav-mobile"></span>
-          </a>
-        <a class="next" href="/post/php/20200812php%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/">
-            <span class="next-text nav-default">PHP错误处理</span>
-            <span class="next-text nav-mobile"></span>
-            <i class="iconfont icon-right"></i>
-          </a>
-      </nav>
-    </footer>
-  </article>
-        </div>
-        
-
-  
-
-  
-
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="social-links">
-  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
-</div>
-
-<div class="copyright">
-  <span class="power-by">
-    %!(EXTRA string=<a class="hexo-link" href="https://gohugo.io">Hugo</a>)
-  </span>
-  <span class="division">|</span>
-  <span class="theme-info">
-     - 
-    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
-  </span>
-
-  
-
-  <span class="copyright-year">
-    &copy; 
-    2020
-    <span class="heart">
-      <i class="iconfont icon-heart"></i>
-    </span>
-    <span class="author">dowle</span>
-  </span>
-</div>
-    </footer>
-
-    <div class="back-to-top" id="back-to-top">
-      <i class="iconfont icon-up"></i>
-    </div>
-  </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script>
-
-
-
-<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
-
-
-
-
-
-
-
-
-</body>
-</html>
+<span class=c1>// 注册加载
+</span><span class=c1></span><span class=nx>spl_autoload_register</span><span class=p>(</span><span class=s2>&#34;AutoLoader::load&#34;</span><span class=p>);</span>
+</code></pre></td></tr></table></div></div></div><footer class=post-footer><div class=post-tags><a href=/tags/php/>PHP</a></div><nav class=post-nav><a class=prev href=/post/%E6%95%B0%E6%8D%AE%E5%BA%93/20200821mysql%E9%94%81/><i class="iconfont icon-left"></i><span class="prev-text nav-default">mysql锁</span>
+<span class="prev-text nav-mobile"></span></a><a class=next href=/post/php/20200812php%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/><span class="next-text nav-default">PHP错误处理</span>
+<span class="next-text nav-mobile"></span><i class="iconfont icon-right"></i></a></nav></footer></article></div></div></main><footer id=footer class=footer><div class=social-links><a href=/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>%!(EXTRA string=<a class=hexo-link href=https://gohugo.io>Hugo</a>)</span>
+<span class=division>|</span>
+<span class=theme-info>-
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
+<span class=copyright-year>&copy;
+2020
+<span class=heart><i class="iconfont icon-heart"></i></span><span class=author>dowle</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script type=text/javascript src=/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js></script></body></html>

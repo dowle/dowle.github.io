@@ -1,0 +1,150 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>nginx自签证书 - 杜东为的博客</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="dowle"><meta name=description content="要保证Web浏览器到服务器的安全连接，HTTPS几乎是唯一选择。HTTPS其实就是HTTP over SSL，也就是让HTTP连接建立在SSL安全连接"><meta name=keywords content="golang,数据库,系统架构"><meta name=generator content="Hugo 0.75.0 with theme even"><link rel=canonical href=/post/%E7%BD%91%E7%BB%9C/20201031nginx%E8%87%AA%E7%AD%BE%E8%AF%81%E4%B9%A6/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.8c3cbcb0324c2bb4875ceccba4007cbad4b4ac8377f33af9953c3e7684534a50.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><link rel=stylesheet href=/css/even_hide.css><meta property="og:title" content="nginx自签证书"><meta property="og:description" content="要保证Web浏览器到服务器的安全连接，HTTPS几乎是唯一选择。HTTPS其实就是HTTP over SSL，也就是让HTTP连接建立在SSL安全连接"><meta property="og:type" content="article"><meta property="og:url" content="/post/%E7%BD%91%E7%BB%9C/20201031nginx%E8%87%AA%E7%AD%BE%E8%AF%81%E4%B9%A6/"><meta property="article:published_time" content="2020-10-31T13:29:43+08:00"><meta property="article:modified_time" content="2020-10-31T13:29:43+08:00"><meta itemprop=name content="nginx自签证书"><meta itemprop=description content="要保证Web浏览器到服务器的安全连接，HTTPS几乎是唯一选择。HTTPS其实就是HTTP over SSL，也就是让HTTP连接建立在SSL安全连接"><meta itemprop=datePublished content="2020-10-31T13:29:43+08:00"><meta itemprop=dateModified content="2020-10-31T13:29:43+08:00"><meta itemprop=wordCount content="1646"><meta itemprop=keywords content="nginx,ssl,https,"><meta name=twitter:card content="summary"><meta name=twitter:title content="nginx自签证书"><meta name=twitter:description content="要保证Web浏览器到服务器的安全连接，HTTPS几乎是唯一选择。HTTPS其实就是HTTP over SSL，也就是让HTTP连接建立在SSL安全连接"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script><script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>Dowle</a></div><div class=mobile-navbar-icon><span></span><span></span><span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>首页</li></a><a href=/post/><li class=mobile-menu-item>归档</li></a><a href=/tags/><li class=mobile-menu-item>标签</li></a><a href=/categories/><li class=mobile-menu-item>分类</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>Dowle</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>首页</a></li><li class=menu-item><a class=menu-item-link href=/post/>归档</a></li><li class=menu-item><a class=menu-item-link href=/tags/>标签</a></li><li class=menu-item><a class=menu-item-link href=/categories/>分类</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>nginx自签证书</h1><div class=post-meta><span class=post-time>2020-10-31</span><div class=post-category><a href=/categories/%E7%BD%91%E7%BB%9C/>网络</a></div></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title></h2><div class="post-toc-content always-active"><nav id=TableOfContents></nav></div></div><div class=post-content><p>要保证Web浏览器到服务器的安全连接，HTTPS几乎是唯一选择。HTTPS其实就是HTTP over SSL，也就是让HTTP连接建立在SSL安全连接之上。</p><p>SSL使用证书来创建安全连接。有两种验证模式：</p><ul><li>仅客户端验证服务器的证书，客户端自己不提供证书；</li><li>客户端和服务器都互相验证对方的证书。</li></ul><p>显然第二种方式安全性更高，一般用网上银行会这么搞，但是，普通的Web网站只能采用第一种方式。</p><p>客户端如何验证服务器的证书呢？服务器自己的证书必须经过某“权威”证书的签名，而这个“权威”证书又可能经过更权威的证书签名，这么一级一级追溯上去，最顶层那个最权威的证书就称为根证书。根证书直接内置在浏览器中，这样，浏览器就可以利用自己自带的根证书去验证某个服务器的证书是否有效。</p><p>如果要提供一个有效的证书，服务器的证书必须从VeriSign这样的证书颁发机构签名，这样，浏览器就可以验证通过，否则，浏览器给出一个证书无效的警告。</p><p>申请一个证书签名的费用是一年几十~几百刀不等，所以如果只是出于管理目的，可以创建自签名证书，保证管理员通过浏览器安全连接到服务器。</p><p>下面简单介绍如何创建一个自签名的SSL证书。</p><p>创建自签名证书需要安装openssl，使用以下步骤：</p><ol><li>创建Key；</li><li>创建签名请求；</li><li>将Key的口令移除；</li><li>用Key签名证书。</li></ol><p>为HTTPS准备的证书需要注意，创建的签名请求的CN必须与域名完全一致，否则无法通过浏览器验证。</p><p>以上步骤命令繁琐，所以我做了一个shell脚本，能一次性把证书搞定。从这里下载脚本：</p><p><a href=https://github.com/michaelliao/itranswarp.js/blob/master/conf/ssl/gencert.sh>https://github.com/michaelliao/itranswarp.js/blob/master/conf/ssl/gencert.sh</a></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh><span class=cp>#!/bin/sh
+</span><span class=cp></span>
+<span class=c1># create self-signed server certificate:</span>
+
+<span class=nb>read</span> -p <span class=s2>&#34;Enter your domain [www.example.com]: &#34;</span> DOMAIN
+
+<span class=nb>echo</span> <span class=s2>&#34;Create server key...&#34;</span>
+
+openssl genrsa -out <span class=nv>$DOMAIN</span>.key <span class=m>2048</span>
+
+<span class=nb>echo</span> <span class=s2>&#34;Create server certificate signing request...&#34;</span>
+
+<span class=nv>SUBJECT</span><span class=o>=</span><span class=s2>&#34;/C=US/ST=Mars/L=iTranswarp/O=iTranswarp/OU=iTranswarp/CN=</span><span class=nv>$DOMAIN</span><span class=s2>&#34;</span>
+
+openssl req -new -subj <span class=nv>$SUBJECT</span> -key <span class=nv>$DOMAIN</span>.key -out <span class=nv>$DOMAIN</span>.csr
+
+<span class=nb>echo</span> <span class=s2>&#34;Remove password...&#34;</span>
+
+mv <span class=nv>$DOMAIN</span>.key <span class=nv>$DOMAIN</span>.origin.key
+openssl rsa -in <span class=nv>$DOMAIN</span>.origin.key -out <span class=nv>$DOMAIN</span>.key
+
+<span class=nb>echo</span> <span class=s2>&#34;Sign SSL certificate...&#34;</span>
+
+openssl x509 -req -days <span class=m>3650</span> -in <span class=nv>$DOMAIN</span>.csr -signkey <span class=nv>$DOMAIN</span>.key -out <span class=nv>$DOMAIN</span>.crt
+
+<span class=nb>echo</span> <span class=s2>&#34;TODO:&#34;</span>
+<span class=nb>echo</span> <span class=s2>&#34;Copy </span><span class=nv>$DOMAIN</span><span class=s2>.crt to /etc/nginx/ssl/</span><span class=nv>$DOMAIN</span><span class=s2>.crt&#34;</span>
+<span class=nb>echo</span> <span class=s2>&#34;Copy </span><span class=nv>$DOMAIN</span><span class=s2>.key to /etc/nginx/ssl/</span><span class=nv>$DOMAIN</span><span class=s2>.key&#34;</span>
+<span class=nb>echo</span> <span class=s2>&#34;Add configuration in nginx:&#34;</span>
+<span class=nb>echo</span> <span class=s2>&#34;server {&#34;</span>
+<span class=nb>echo</span> <span class=s2>&#34;    ...&#34;</span>
+<span class=nb>echo</span> <span class=s2>&#34;    listen 443 ssl;&#34;</span>
+<span class=nb>echo</span> <span class=s2>&#34;    ssl_certificate     /etc/nginx/ssl/</span><span class=nv>$DOMAIN</span><span class=s2>.crt;&#34;</span>
+<span class=nb>echo</span> <span class=s2>&#34;    ssl_certificate_key /etc/nginx/ssl/</span><span class=nv>$DOMAIN</span><span class=s2>.key;&#34;</span>
+<span class=nb>echo</span> <span class=s2>&#34;}&#34;</span>
+
+</code></pre></td></tr></table></div></div><p>运行脚本，假设你的域名是www.test.com，那么按照提示输入：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-bash data-lang=bash>$ ./gencert.sh 
+Enter your domain <span class=o>[</span>www.example.com<span class=o>]</span>: www.test.com          
+Create server key...
+Generating RSA private key, <span class=m>2048</span> bit long modulus
+.................++++++
+.....++++++
+e is <span class=m>65537</span> <span class=o>(</span>0x10001<span class=o>)</span>
+Enter pass phrase <span class=k>for</span> www.test.com.key:输入口令
+Verifying - Enter pass phrase <span class=k>for</span> www.test.com.key:输入口令
+Create server certificate signing request...
+Enter pass phrase <span class=k>for</span> www.test.com.key:输入口令
+Remove password...
+Enter pass phrase <span class=k>for</span> www.test.com.origin.key:输入口令
+writing RSA key
+Sign SSL certificate...
+Signature ok
+<span class=nv>subject</span><span class=o>=</span>/C<span class=o>=</span>US/ST<span class=o>=</span>Mars/L<span class=o>=</span>iTranswarp/O<span class=o>=</span>iTranswarp/OU<span class=o>=</span>iTranswarp/CN<span class=o>=</span>www.test.com
+Getting Private key
+TODO:
+Copy www.test.com.crt to /etc/nginx/ssl/www.test.com.crt
+Copy www.test.com.key to /etc/nginx/ssl/www.test.com.key
+Add configuration in nginx:
+server <span class=o>{</span>
+    ...
+    listen <span class=m>443</span> ssl<span class=p>;</span>
+    ssl_certificate     /etc/nginx/ssl/www.test.com.crt<span class=p>;</span>
+    ssl_certificate_key /etc/nginx/ssl/www.test.com.key<span class=p>;</span>
+<span class=o>}</span>
+</code></pre></td></tr></table></div></div><p>红色部分是输入，注意4次输入的口令都是一样的。</p><p>在当前目录下会创建出4个文件：</p><ul><li><a href=http://www.test.com.crt>www.test.com.crt</a>：自签名的证书</li><li><a href=http://www.test.com.csr>www.test.com.csr</a>：证书的请求</li><li><a href=http://www.test.com.key>www.test.com.key</a>：不带口令的Key</li><li><a href=http://www.test.com.origin.key>www.test.com.origin.key</a>：带口令的Key</li></ul><p>Web服务器需要把www.test.com.crt发给浏览器验证，然后用www.test.com.key解密浏览器发送的数据，剩下两个文件不需要上传到Web服务器上。</p><p>以Nginx为例，需要在server {&mldr;}中配置：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-fallback data-lang=fallback>server {
+    listen 443 ssl;
+    ...
+    ssl_certificate     /etc/nginx/ssl/www.test.com.crt;
+    ssl_certificate_key /etc/nginx/ssl/www.test.com.key;
+}
+</code></pre></td></tr></table></div></div><p>如果一切顺利，打开浏览器，就可以通过HTTPS访问网站。第一次访问时会出现警告（因为我们的自签名证书不被浏览器信任），把证书通过浏览器导入到系统（Windows使用IE导入，Mac使用Safari导入）并设置为“受信任”，以后该电脑访问网站就可以安全地连接Web服务器了：</p><p>self-signed-cert</p><p>如何在应用服务器中配置证书呢？例如Tomcat，gunicorn等。正确的做法是不配置，让Nginx处理HTTPS，然后通过proxy以HTTP连接后端的应用服务器，相当于利用Nginx作为HTTPS到HTTP的安全代理，这样即利用了Nginx的HTTP/HTTPS处理能力，又避免了应用服务器不擅长HTTPS的缺点。</p><p>chrome 打不开时，在报错页面输入 thisisunsafe</p><p>转载于：https://www.liaoxuefeng.com/article/990311924891552</p></div><footer class=post-footer><div class=post-tags><a href=/tags/nginx/>nginx</a>
+<a href=/tags/ssl/>ssl</a>
+<a href=/tags/https/>https</a></div><nav class=post-nav><a class=next href=/post/vcs/20200917git_commit%E8%A7%84%E8%8C%83/><span class="next-text nav-default">git_commit规范</span>
+<span class="next-text nav-mobile"></span><i class="iconfont icon-right"></i></a></nav></footer></article></div></div></main><footer id=footer class=footer><div class=social-links><a href=/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>%!(EXTRA string=<a class=hexo-link href=https://gohugo.io>Hugo</a>)</span>
+<span class=division>|</span>
+<span class=theme-info>-
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
+<span class=copyright-year>&copy;
+2020
+<span class=heart><i class="iconfont icon-heart"></i></span><span class=author>dowle</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script><script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script><script type=text/javascript src=/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js></script></body></html>
